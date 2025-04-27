@@ -45,7 +45,7 @@
 
 | Miembro   | Rol                   | Funciones |
 |-----------|------------------------|-----------|
-| Miembro 1 | Desarrollador Backend   | - Microservicio de usuarios (Nest.js).<br>- Autenticación con JWT y roles.<br>- API Gateway. |
-| Miembro 2 | Desarrollador Frontend  | - Interfaz de paciente (Angular).<br>- UI/UX para reservas y historiales.<br>- Integración con WebSockets. |
-| Miembro 3 | Documentación y Testing | - Documentación técnica (Swagger).<br>- Pruebas unitarias y funcionales.<br>- Manual de usuario. |
-| Miembro 4 | DevOps y Analítica      | - Configuración de Docker y GitFlow.<br>- Despliegue en AWS/Google Cloud.<br>- Generación de reportes analíticos. |
+| Jairo | Desarrollador Backend   | - Microservicio de usuarios (Nest.js).<br>- Autenticación con JWT y roles.<br>- API Gateway. |
+| Aleja Altamiiran | Desarrollador Frontend  | - Interfaz de paciente (Angular).<br>- UI/UX para reservas y historiales.<br>- Integración con WebSockets. |
+| Simon Hinojosa  Documentación y Testing | - Documentación técnica (Swagger).<br>- Pruebas unitarias y funcionales.<br>- Manual de usuario. |
+| Miguel Gomez | DevOps y Analítica      | - Configuración de Docker y GitFlow.<br>- Despliegue en AWS/Google Cloud.<br>- Generación de reportes analíticos. |
