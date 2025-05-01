@@ -1,6 +1,7 @@
 // src/app/pages/register/register.component.ts
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +19,8 @@ export class RegisterComponent {
     confirmPassword: ''
   };
 
+  constructor(private authService: AuthService) {}
+
   // Método para manejar el envío del formulario
   onSubmit(): void {
     if (this.user.password !== this.user.confirmPassword) {
@@ -25,11 +28,16 @@ export class RegisterComponent {
       return;
     }
 
-    console.log('Datos de registro enviados:', this.user);
-
-    // Simulación de registro exitoso
-    alert('Registro exitoso');
-    this.resetForm();
+    this.authService.register(this.user).subscribe({
+      next: () => {
+        alert('Registro exitoso');
+        this.resetForm();
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Error al registrar usuario');
+      },
+    });
   }
 
   // Método para resetear el formulario

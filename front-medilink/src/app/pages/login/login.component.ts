@@ -2,6 +2,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,16 +18,19 @@ export class LoginComponent {
     password: ''
   };
 
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   // Método para manejar el envío del formulario
   onSubmit(): void {
-    console.log('Credenciales enviadas:', this.credentials);
-
-    // Simulación de autenticación exitosa
-    alert('Inicio de sesión exitoso');
-
-    // Redirigir al usuario a la página principal después del inicio de sesión
-    this.router.navigate(['/home']);
+    this.authService.login(this.credentials).subscribe({
+      next: () => {
+        alert('Inicio de sesión exitoso');
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Error al iniciar sesión');
+      },
+    });
   }
 }
