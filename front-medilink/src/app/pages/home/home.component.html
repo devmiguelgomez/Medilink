@@ -1,0 +1,259 @@
+<!-- Partículas de fondo -->
+<div id="particles-js"></div>
+
+<!-- Barra de navegación -->
+<nav class="navbar">
+  <div class="navbar-container">
+    <div class="logo">
+      <a href="#">
+        <span class="logo-text">Medi<span class="highlight">link</span></span>
+        <span class="logo-icon">
+          <svg viewBox="0 0 24 24" class="pulse-icon">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+    <div class="nav-buttons">
+      <button class="login-btn">
+        <span class="btn-text">Iniciar sesión</span>
+        <span class="btn-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z"/></svg>
+        </span>
+      </button>
+      <button class="register-btn">
+        <span class="btn-text">Registrarse</span>
+        <span class="btn-icon">
+          <svg viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section (Restaurado al diseño original) -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Bienvenido a Medilink</h1>
+    <p>Tu plataforma de salud digital</p>
+    <button class="cta-button">Agendar una cita</button>
+  </div>
+</section>
+
+<!-- Servicios Destacados -->
+<section class="services-section">
+  <div class="section-header">
+    <h2 class="reveal-text">Nuestros Servicios</h2>
+    <div class="underline"></div>
+  </div>
+  <div class="services-grid">
+    <div *ngFor="let service of services; let i = index" class="service-card" [attr.data-index]="i">
+      <div class="service-icon-wrapper">
+        <i class="service-icon">{{ service.icon }}</i>
+      </div>
+      <h3>{{ service.title }}</h3>
+      <p>{{ service.description }}</p>
+      <div class="service-hover"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonios -->
+<section class="testimonials-section">
+  <div class="testimonials-bg">
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+  </div>
+  <div class="section-header">
+    <h2 class="reveal-text">Lo que dicen nuestros pacientes</h2>
+    <div class="underline"></div>
+  </div>
+  <div class="testimonial-container">
+    <div class="testimonial-card">
+      <div class="quote-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M6.5 10c-.223 0-.437.034-.65.065c.069-.232.14-.468.254-.68c.114-.308.292-.575.469-.844c.148-.291.409-.488.601-.737c.201-.242.475-.403.692-.604c.213-.21.492-.315.714-.463c.232-.133.434-.28.65-.35l.539-.222l.474-.197l-.485-1.938l-.597.144c-.191.048-.424.104-.689.171c-.271.05-.56.187-.882.312c-.318.142-.686.238-1.028.466c-.344.218-.741.4-1.091.692c-.339.301-.748.562-1.05.945c-.33.358-.656.734-.909 1.162c-.293.408-.492.856-.702 1.299c-.19.443-.343.896-.468 1.336c-.237.882-.343 1.72-.384 2.437c-.034.718-.014 1.315.028 1.747c.015.204.043.402.063.539l.025.168l.026-.006A4.5 4.5 0 1 0 6.5 10zm11 0c-.223 0-.437.034-.65.065c.069-.232.14-.468.254-.68c.114-.308.292-.575.469-.844c.148-.291.409-.488.601-.737c.201-.242.475-.403.692-.604c.213-.21.492-.315.714-.463c.232-.133.434-.28.65-.35l.539-.222l.474-.197l-.485-1.938l-.597.144c-.191.048-.424.104-.689.171c-.271.05-.56.187-.882.312c-.317.143-.686.238-1.028.467c-.344.218-.741.4-1.091.692c-.339.301-.748.562-1.05.944c-.33.358-.656.734-.909 1.162c-.293.408-.492.856-.702 1.299c-.19.443-.343.896-.468 1.336c-.237.882-.343 1.72-.384 2.437c-.034.718-.014 1.315.028 1.747c.015.204.043.402.063.539l.025.168l.026-.006A4.5 4.5 0 1 0 17.5 10z"></path>
+        </svg>
+      </div>
+      <img [src]="testimonials[currentTestimonialIndex].avatar" [alt]="testimonials[currentTestimonialIndex].name" class="testimonial-avatar">
+      <p class="testimonial-text">"{{ testimonials[currentTestimonialIndex].comment }}"</p>
+      <div class="testimonial-author">
+        <h4>{{ testimonials[currentTestimonialIndex].name }}</h4>
+        <p>{{ testimonials[currentTestimonialIndex].role }}</p>
+      </div>
+      <div class="testimonial-buttons">
+        <button (click)="prevTestimonial()" class="testimonial-btn prev-btn">
+          <span class="btn-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          </span>
+        </button>
+        <div class="testimonial-dots">
+          <span *ngFor="let t of testimonials; let i = index" 
+                [ngClass]="{'active': i === currentTestimonialIndex}" 
+                (click)="goToTestimonial(i)"></span>
+        </div>
+        <button (click)="nextTestimonial()" class="testimonial-btn next-btn">
+          <span class="btn-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pie de Página -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <span class="logo-text">Medi<span class="highlight">link</span></span>
+    </div>
+    <p>&copy; 2025 Medilink. Todos los derechos reservados.</p>
+    <div class="social-icons">
+      <a href="#" class="social-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
+      </a>
+      <a href="#" class="social-icon">
+        <svg viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69c.88-.53 1.56-1.37 1.88-2.38c-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29c0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15c0 1.49.75 2.81 1.91 3.56c-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07a4.28 4.28 0 0 0 4 2.98a8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21C16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56c.84-.6 1.56-1.36 2.14-2.23z"/></svg>
+      </a>
+      <a href="#" class="social-icon">
+        <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8A1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5a5 5 0 0 1-5 5a5 5 0 0 1-5-5a5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- Script para partículas -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof particlesJS !== 'undefined') {
+      particlesJS('particles-js', {
+        "particles": {
+          "number": {
+            "value": 80,
+            "density": {
+              "enable": true,
+              "value_area": 800
+            }
+          },
+          "color": {
+            "value": "#ffffff"
+          },
+          "shape": {
+            "type": "circle",
+            "stroke": {
+              "width": 0,
+              "color": "#000000"
+            },
+            "polygon": {
+              "nb_sides": 5
+            }
+          },
+          "opacity": {
+            "value": 0.5,
+            "random": false,
+            "anim": {
+              "enable": false,
+              "speed": 1,
+              "opacity_min": 0.1,
+              "sync": false
+            }
+          },
+          "size": {
+            "value": 3,
+            "random": true,
+            "anim": {
+              "enable": false,
+              "speed": 40,
+              "size_min": 0.1,
+              "sync": false
+            }
+          },
+          "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#ffffff",
+            "opacity": 0.4,
+            "width": 1
+          },
+          "move": {
+            "enable": true,
+            "speed": 2,
+            "direction": "none",
+            "random": false,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false,
+            "attract": {
+              "enable": false,
+              "rotateX": 600,
+              "rotateY": 1200
+            }
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": {
+              "enable": true,
+              "mode": "grab"
+            },
+            "onclick": {
+              "enable": true,
+              "mode": "push"
+            },
+            "resize": true
+          },
+          "modes": {
+            "grab": {
+              "distance": 140,
+              "line_linked": {
+                "opacity": 1
+              }
+            },
+            "bubble": {
+              "distance": 400,
+              "size": 40,
+              "duration": 2,
+              "opacity": 8,
+              "speed": 3
+            },
+            "repulse": {
+              "distance": 200,
+              "duration": 0.4
+            },
+            "push": {
+              "particles_nb": 4
+            },
+            "remove": {
+              "particles_nb": 2
+            }
+          }
+        },
+        "retina_detect": true
+      });
+    }
+    
+    // Animación para elementos con clase reveal-text
+    const revealElements = document.querySelectorAll('.reveal-text');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    revealElements.forEach(el => {
+      observer.observe(el);
+    });
+    
+    // Animación para tarjetas de servicio
+    const serviceCards = document.querySelectorAll('.service-card');
+    serviceCards.forEach((card, index) => {
+      card.style.animationDelay = `${index * 0.1}s`;
+      observer.observe(card);
+    });
+  });
+</script>
