@@ -1,0 +1,88 @@
+/* src/app/pages/register/register.component.css */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #E3F2FD; /* Fondo azul claro */
+  }
+  
+  .register-box {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+    color: #0D47A1; /* Azul oscuro */
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  input:focus {
+    border-color: #007BFF; /* Azul principal */
+    outline: none;
+  }
+  
+  .register-button {
+    background-color: #007BFF; /* Azul principal */
+    color: white;
+    border: none;
+    padding: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .register-button:hover {
+    background-color: #0D47A1; /* Azul oscuro */
+  }
+  
+  .login-link {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 15px;
+  }
+  
+  .login-link a {
+    color: #007BFF; /* Azul principal */
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
