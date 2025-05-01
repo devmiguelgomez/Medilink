@@ -19,7 +19,8 @@ export class RegisterComponent {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: 'paciente' // Valor por defecto
   };
 
   errorMessage = '';
@@ -43,12 +44,13 @@ export class RegisterComponent {
     console.log('Enviando datos de registro:', {
       name: this.user.name,
       email: this.user.email,
+      role: this.user.role,
       // Ocultamos la contraseña en los logs
       password: '******'
     });
     
     this.authService.register(this.user).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         console.log('Registro exitoso:', response);
         // Redireccionar al login tras registro exitoso
         this.router.navigate(['/login'], { 
@@ -89,7 +91,8 @@ export class RegisterComponent {
       name: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      role: 'paciente'
     };
     this.errorMessage = '';
   }

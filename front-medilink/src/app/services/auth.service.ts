@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
-interface User {
+// Definimos la URL de la API desde un valor estático para evitar problemas con environment
+const API_URL = 'http://localhost:3000';
+
+export interface User {
   id: number;
   name: string;
   email: string;
-  role: 'paciente' | 'profesional' | 'administrativo';
+  role: string;
 }
 
-interface AuthResponse {
+export interface AuthResponse {
   user: User;
   token: string;
 }
@@ -19,12 +22,15 @@ interface AuthResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = API_URL;
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser = this.currentUserSubject.asObservable();
   private tokenKey = 'auth_token';
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
     this.loadStoredUser();
   }
 
@@ -32,11 +38,11 @@ export class AuthService {
     const token = localStorage.getItem(this.tokenKey);
     if (token) {
       try {
-        // En una implementación real, deberías validar el token con el backend
-        // o decodificar un JWT para obtener la información del usuario
         const userData = JSON.parse(localStorage.getItem('user_data') || '{}');
-        if (userData) {
+        if (userData && userData.id) {
           this.currentUserSubject.next(userData);
+        } else {
+          this.logout();
         }
       } catch (error) {
         console.error('Error parsing stored user data', error);
@@ -45,7 +51,7 @@ export class AuthService {
     }
   }
 
-  register(userData: { name: string; email: string; password: string; confirmPassword?: string }): Observable<any> {
+  register(userData: { name: string; email: string; password: string; role?: string; confirmPassword?: string }): Observable<any> {
     console.log('Enviando solicitud a:', `${this.apiUrl}/auth/register`);
     
     // Crear una copia sin la propiedad confirmPassword
@@ -59,7 +65,6 @@ export class AuthService {
       })
     };
     
-    // La ruta completa será /api/auth/register (o lo que configure el backend)
     return this.http.post(`${this.apiUrl}/auth/register`, userDataToSend, httpOptions);
   }
 
@@ -72,11 +77,14 @@ export class AuthService {
     };
     
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, credentials, httpOptions).pipe(
-      tap(response => {
+      tap((response) => {
         if (response && response.token) {
           localStorage.setItem(this.tokenKey, response.token);
           localStorage.setItem('user_data', JSON.stringify(response.user));
           this.currentUserSubject.next(response.user);
+          
+          // Redireccionar según el rol
+          this.redirectBasedOnRole(response.user.role);
         }
       })
     );
@@ -86,6 +94,7 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem('user_data');
     this.currentUserSubject.next(null);
+    this.router.navigate(['/login']);
   }
 
   isLoggedIn(): boolean {
@@ -94,5 +103,26 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
+  }
+
+  getUserRole(): string | null {
+    const user = this.currentUserSubject.getValue();
+    return user ? user.role : null;
+  }
+
+  redirectBasedOnRole(role: string): void {
+    switch(role) {
+      case 'paciente':
+        this.router.navigate(['/dashboard']);
+        break;
+      case 'profesional':
+        this.router.navigate(['/profesional']);
+        break;
+      case 'administrativo':
+        this.router.navigate(['/admin']);
+        break;
+      default:
+        this.router.navigate(['/dashboard']);
+    }
   }
 }

@@ -1,5 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BeforeInsert } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('users')
 export class UserEntity {
@@ -15,29 +14,12 @@ export class UserEntity {
   @Column()
   password: string;
 
-  @Column({
-    type: 'enum',
-    enum: ['paciente', 'profesional', 'administrativo'],
-    default: 'paciente'
-  })
-  role: 'paciente' | 'profesional' | 'administrativo';
+  @Column()
+  role: string;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @BeforeInsert()
-  async hashPassword() {
-    if (this.password) {
-      this.password = await bcrypt.hash(this.password, 10);
-    }
-  }
-
-  // No devolver la contraseña en las respuestas
-  toJSON() {
-    const { password, ...user } = this;
-    return user;
-  }
 }

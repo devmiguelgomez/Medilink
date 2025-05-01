@@ -1,17 +1,16 @@
 # Etapa de compilación con optimización de espacio
 FROM node:18-alpine as build
 
-# Configurar variables de entorno para reducir el tamaño de npm
+# Configurar variables de entorno
 ENV NPM_CONFIG_LOGLEVEL=warn
-ENV NODE_ENV=production
 
 WORKDIR /app
 
 # Copiar solo los archivos necesarios para instalar dependencias
 COPY package*.json ./
 
-# Instalar solo las dependencias de producción
-RUN npm ci --only=production && npm cache clean --force
+# Instalar TODAS las dependencias (incluyendo devDependencies)
+RUN npm install && npm cache clean --force
 
 # Ahora copiar el resto del código fuente
 COPY . .

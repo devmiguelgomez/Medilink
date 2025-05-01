@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: '/api' // URL relativa para usar con el proxy de Nginx
+  apiUrl: 'http://localhost:3000'
 };

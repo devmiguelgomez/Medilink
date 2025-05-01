@@ -42,6 +42,8 @@ services:
       - JWT_SECRET=medilink_secret_key_change_in_production
       - PORT=3000
       - CORS_ORIGIN=http://frontend,http://localhost:4200
+      - TYPEORM_CONNECTION_RETRIES=5
+      - TYPEORM_CONNECTION_RETRY_DELAY=2000
     depends_on:
       postgres:
         condition: service_healthy
@@ -64,13 +66,18 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=medilink
+      # Configuración adicional para estabilidad
+      - POSTGRES_MAX_CONNECTIONS=100
+      - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - ./backend/scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
+      interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 10s
     networks:
       - medilink-network
     restart: unless-stopped
@@ -104,3 +111,4 @@ networks:
 
 volumes:
   postgres-data:
+    # Simplifica la definición del volumen para evitar problemas de ruta en Windows
