@@ -1,33 +1,106 @@
 version: '3.8'
+
 services:
-  backend:
-    build: ./backend
-    ports:
-      - '3000:3000'
-    environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: medilink
-    depends_on:
-      - db
-
+  # Servicio para el frontend
   frontend:
-    build: ./front-medilink
+    container_name: medilink-frontend
+    build:
+      context: ./front-medilink
+      dockerfile: Dockerfile
+      # Añadir opciones para limitar los recursos durante la compilación
+      args:
+        - NODE_ENV=production
     ports:
-      - '4200:80'
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - medilink-network
+    restart: unless-stopped
+    # Limitar los recursos del contenedor
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
-  db:
-    image: postgres:15
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: medilink
+  # Servicio para el backend
+  backend:
+    container_name: medilink-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=production
     ports:
-      - '5432:5432'
+      - "3000:3000"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_DATABASE=medilink
+      - JWT_SECRET=medilink_secret_key_change_in_production
+      - PORT=3000
+      - CORS_ORIGIN=http://frontend,http://localhost:4200
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - medilink-network
+    restart: unless-stopped
+    # Limitar los recursos del contenedor
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  # Servicio para la base de datos
+  postgres:
+    container_name: medilink-postgres
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=medilink
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - medilink-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  # Servicio para administrar la base de datos (opcional)
+  pgadmin:
+    container_name: medilink-pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@medilink.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - medilink-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+
+networks:
+  medilink-network:
+    driver: bridge
 
 volumes:
-  db_data:
+  postgres-data:

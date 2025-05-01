@@ -2,6 +2,21 @@
 <div class="register-container">
     <div class="register-box">
       <h2>Registrarse</h2>
+      
+      <!-- Mensaje de error -->
+      <div *ngIf="errorMessage" class="error-message">
+        <strong>Error:</strong> {{ errorMessage }}
+        <div *ngIf="errorMessage.includes('404')">
+          Esto puede ocurrir si la ruta de la API no está configurada correctamente.
+        </div>
+      </div>
+      
+      <!-- Indicador de carga -->
+      <div *ngIf="loading" class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Procesando solicitud...</p>
+      </div>
+      
       <form (ngSubmit)="onSubmit()">
         <!-- Campo de nombre -->
         <div class="form-group">
@@ -56,7 +71,9 @@
         </div>
   
         <!-- Botón de envío -->
-        <button type="submit" class="register-button">Registrarse</button>
+        <button type="submit" class="register-button" [disabled]="loading">
+          {{ loading ? 'Procesando...' : 'Registrarse' }}
+        </button>
       </form>
   
       <!-- Enlace para iniciar sesión -->
