@@ -11,11 +11,10 @@ const patientSchema = mongoose.Schema({
     policyNumber: String,
     expirationDate: Date
   },
-  medicalHistory: {
+  basicMedicalInfo: {
     bloodType: String,
     allergies: [String],
-    chronicConditions: [String],
-    familyHistory: [String]
+    chronicConditions: [String]
   },
   emergencyContact: {
     name: String,
