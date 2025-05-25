@@ -1,27 +1,31 @@
 const express = require('express');
 const router = express.Router();
-const { protect, authorize } = require('../middleware/authMiddleware');
+const { protect } = require('../middleware/authMiddleware');
 
-// Importaríamos un controlador de citas aquí
-// const { getAppointments, createAppointment, ... } = require('../controllers/appointmentController');
-
-// Rutas temporales para prueba
+// Rutas más simples para evitar problemas con path-to-regexp
 router.get('/', (req, res) => {
-  res.json({ message: 'API de citas funcionando' });
+  res.json({ message: 'API de citas funcionando', success: true });
 });
 
 router.post('/', (req, res) => {
   res.json({ message: 'Crear cita: OK', data: req.body });
 });
 
-// Estas serían las rutas reales cuando implementemos los controladores
-// router.route('/')
-//   .get(protect, getAppointments)
-//   .post(protect, createAppointment);
+// Rutas para operaciones específicas
+router.get('/list', (req, res) => {
+  res.json({ message: 'Lista de citas', data: [] });
+});
 
-// router.route('/:id')
-//   .get(protect, getAppointmentById)
-//   .put(protect, updateAppointment)
-//   .delete(protect, cancelAppointment);
+router.get('/:id', (req, res) => {
+  res.json({ message: `Detalle de cita ${req.params.id}`, data: { id: req.params.id } });
+});
+
+router.put('/:id', (req, res) => {
+  res.json({ message: `Actualizar cita ${req.params.id}`, data: req.body });
+});
+
+router.delete('/:id', (req, res) => {
+  res.json({ message: `Eliminar cita ${req.params.id}`, success: true });
+});
 
 module.exports = router;

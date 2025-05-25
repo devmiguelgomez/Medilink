@@ -1,7 +1,7 @@
 // src/services/activityService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/activities'; // URL del backend
+const API_URL = 'https://medilink-backend-flax.vercel.app/api/activities'; // URL del backend
 
 // Obtener todas las actividades registradas
 export const getActivities = async () => {

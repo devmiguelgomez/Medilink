@@ -1,7 +1,7 @@
 // src/services/consultationService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/consultations'; // URL del backend
+const API_URL = 'https://medilink-backend-flax.vercel.app/api/consultations'; // URL del backend
 
 // Obtener citas médicas (filtradas por profesional o paciente)
 export const getAppointments = async (filters) => {

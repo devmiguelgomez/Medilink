@@ -1,7 +1,7 @@
 // src/services/scheduleService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/schedules'; // URL del backend
+const API_URL = 'https://medilink-backend-flax.vercel.app/api/schedules'; // URL del backend
 
 // Obtener todos los horarios
 export const getSchedules = async () => {

@@ -1,7 +1,7 @@
 // src/services/appointmentService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/appointments'; // URL del backend
+const API_URL = 'https://medilink-backend-flax.vercel.app/api/appointments'; // URL del backend
 
 export const getAppointments = async () => {
   try {
