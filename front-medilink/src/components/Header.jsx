@@ -6,22 +6,22 @@ function Header() {
     <header
       className="header"
       style={{
-        background: 'linear-gradient(90deg, #007bff 60%, #00c6fb 100%)',
+        background: 'var(--primary)',
         color: '#fff',
-        padding: '1.2rem 2rem',
+        padding: '1rem 2rem',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderBottomLeftRadius: '1.5rem',
-        borderBottomRightRadius: '1.5rem',
-        boxShadow: '0 4px 16px rgba(0,123,255,0.10)',
+        borderBottomLeftRadius: '1rem',
+        borderBottomRightRadius: '1rem',
+        boxShadow: '0 4px 16px rgba(44, 78, 207, 0.08)',
         position: 'relative',
         zIndex: 10
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <img
-          src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png"
+          src="https://cdn-icons-png.flaticon.com/512/4006/4006511.png" // Nuevo ícono más profesional
           alt="MedLink Logo"
           style={{
             width: 44,
@@ -66,22 +66,6 @@ function Header() {
           onMouseOut={e => e.target.style.background = 'transparent'}
         >
           Inicio
-        </Link>
-        <Link
-          to="/login"
-          style={{
-            color: '#fff',
-            fontWeight: 600,
-            fontSize: '1.05rem',
-            padding: '0.4rem 1.1rem',
-            borderRadius: '1.2rem',
-            transition: 'background 0.2s',
-            background: 'transparent'
-          }}
-          onMouseOver={e => e.target.style.background = '#e3f0ff44'}
-          onMouseOut={e => e.target.style.background = 'transparent'}
-        >
-          Iniciar Sesión
         </Link>
         <Link
           to="/register"

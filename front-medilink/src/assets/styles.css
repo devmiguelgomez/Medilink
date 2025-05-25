@@ -1,11 +1,21 @@
 /* Importar fuentes desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins :wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #2C4ECF;
+  --primary-light: #4A90E2;
+  --accent: #E63946;
+  --background: #F8FAFC;
+  --text: #2D3748;
+  --text-light: #718096;
+}
 
 /* Reset básico */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
 }
 
 body {

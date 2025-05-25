@@ -1,188 +1,206 @@
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import React, { useState } from 'react';
+import LoginForm from '../components/LoginForm';
 
 function LoginPage() {
-  const { login } = useContext(AuthContext);
-  const [credentials, setCredentials] = useState({ email: '', password: '' });
-
-  const handleChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    login({ name: 'Usuario Ejemplo', role: 'paciente' });
-    alert('Inicio de sesión exitoso');
-  };
+  const [showLoginForm, setShowLoginForm] = useState(false);
 
   return (
-    <div className="login-page" style={{
+    <div className="landing-page" style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #e3f0ff 0%, #ffffff 100%)',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center'
+      background: 'linear-gradient(to bottom right, #f3f9ff, #ffffff)',
+      fontFamily: 'Outfit, sans-serif',
+      padding: '2rem'
     }}>
-      {/* Introducción de la empresa */}
+      {/* Hero Section */}
       <section style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        maxWidth: '800px',
+        margin: '2rem auto',
         background: '#fff',
-        borderRadius: '1rem',
-        boxShadow: '0 8px 24px rgba(0,123,255,0.08)',
-        padding: '2.5rem 2rem 1.5rem 2rem',
-        maxWidth: 420,
-        width: '100%',
-        marginBottom: '2rem',
-        textAlign: 'center'
+        borderRadius: '1.5rem',
+        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.06)',
+        overflow: 'hidden',
+        padding: '2rem',
+        gap: '2rem'
       }}>
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png"
-          alt="MedLink Logo"
-          style={{ width: 70, marginBottom: 12 }}
-        />
-        <h1 style={{ color: '#007bff', fontWeight: 700, fontSize: '2rem', marginBottom: 8 }}>
-          Bienvenido a MedLink
-        </h1>
-        <p style={{ color: '#212529', fontSize: '1.1rem', marginBottom: 0 }}>
-          Tu plataforma digital para conectar pacientes y profesionales de la salud de manera rápida, segura y eficiente.
-        </p>
+        {/* Text Section */}
+        <div style={{
+          flex: 1,
+          padding: '1rem'
+        }}>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/4006/4006511.png"
+            alt="MedLink Logo"
+            style={{
+              width: '50px',
+              marginBottom: '1rem'
+            }}
+          />
+          <h1 style={{
+            fontSize: '1.8rem',
+            color: '#1c3faa',
+            marginBottom: '1rem',
+            lineHeight: '1.4'
+          }}>
+            La atención médica del <br />
+            <span style={{ color: '#e74c3c' }}>futuro comienza hoy</span>
+          </h1>
+          <p style={{
+            fontSize: '1rem',
+            color: '#555',
+            marginBottom: '1.5rem',
+            maxWidth: '90%'
+          }}>
+            Agenda tus citas, consulta tu historial y accede a profesionales certificados sin salir de casa. MedLink lo hace fácil.
+          </p>
+          <button
+            onClick={() => setShowLoginForm(true)}
+            style={{
+              background: 'linear-gradient(90deg, #1c3faa, #4a90e2)',
+              color: 'white',
+              padding: '0.9rem 2rem',
+              borderRadius: '30px',
+              fontSize: '1rem',
+              fontWeight: 600,
+              border: 'none',
+              cursor: 'pointer',
+              boxShadow: '0 8px 20px rgba(76, 115, 255, 0.2)',
+              transition: '0.3s ease'
+            }}
+            onMouseOver={e => e.target.style.transform = 'scale(1.05)'}
+            onMouseOut={e => e.target.style.transform = 'scale(1)'}
+          >
+            Comenzar Ahora
+          </button>
+        </div>
+
+        {/* Image Section */}
+        <div style={{
+          flex: 0.9,
+          borderRadius: '1rem',
+          overflow: 'hidden'
+        }}>
+          <img
+            src="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&q=80"
+            alt="Doctora con paciente"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              borderRadius: '1rem'
+            }}
+          />
+        </div>
       </section>
 
-      {/* Formulario de inicio de sesión */}
-      <div className="form-container" style={{
-        background: '#f8f9fa',
-        borderRadius: '1rem',
-        boxShadow: '0 4px 16px rgba(0,123,255,0.10)',
-        padding: '2rem',
-        maxWidth: 400,
-        width: '100%',
-        marginBottom: '2rem'
+      {/* Statistics Section */}
+      <section style={{
+        maxWidth: '1000px',
+        margin: '3rem auto',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+        gap: '2rem',
+        textAlign: 'center'
       }}>
-        <h2 style={{ color: '#007bff', fontWeight: 700, marginBottom: 16 }}>Iniciar Sesión</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            placeholder="Correo electrónico"
-            value={credentials.email}
-            onChange={handleChange}
-            required
-            style={{
-              width: '100%',
-              padding: '0.9rem',
-              marginBottom: '1rem',
-              border: '1.5px solid #b6d4fe',
-              borderRadius: '0.5rem',
-              fontSize: '1rem'
-            }}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Contraseña"
-            value={credentials.password}
-            onChange={handleChange}
-            required
-            style={{
-              width: '100%',
-              padding: '0.9rem',
-              marginBottom: '1rem',
-              border: '1.5px solid #b6d4fe',
-              borderRadius: '0.5rem',
-              fontSize: '1rem'
-            }}
-          />
-          <button
-            type="submit"
-            className="primary"
-            style={{
-              width: '100%',
-              background: 'linear-gradient(90deg, #007bff 60%, #00c6fb 100%)',
-              color: '#fff',
-              fontWeight: 700,
-              fontSize: '1.1rem',
-              borderRadius: '2rem',
-              padding: '0.9rem',
-              marginBottom: 8,
-              border: 'none',
-              boxShadow: '0 2px 8px rgba(0,123,255,0.10)'
-            }}
-          >
-            Iniciar Sesión
-          </button>
-        </form>
-        <p className="forgot-password" style={{ textAlign: 'center', marginTop: 8 }}>
-          <a href="/forgot-password" style={{ color: '#dc3545', fontWeight: 500 }}>
-            ¿Olvidaste tu contraseña?
-          </a>
-        </p>
-      </div>
+        {[
+          { number: '1000+', label: 'Profesionales', color: '#1c3faa' },
+          { number: '50,000+', label: 'Pacientes Atendidos', color: '#00c6fb' },
+          { number: '98%', label: 'Satisfacción', color: '#dc3545' }
+        ].map((stat, index) => (
+          <div key={index} style={{
+            background: '#fff',
+            padding: '2rem',
+            borderRadius: '1rem',
+            border: `1.5px solid ${stat.color}33`,
+            boxShadow: '0 6px 20px rgba(0, 0, 0, 0.05)'
+          }}>
+            <h3 style={{
+              fontSize: '2rem',
+              color: stat.color,
+              marginBottom: '0.5rem',
+              fontWeight: 'bold'
+            }}>{stat.number}</h3>
+            <p style={{ color: '#666' }}>{stat.label}</p>
+          </div>
+        ))}
+      </section>
 
-      {/* Opiniones de usuarios */}
-      <section className="testimonials" style={{
-        maxWidth: 700,
-        width: '100%',
-        margin: '0 auto',
-        marginBottom: '2rem'
+      {/* Testimonials Section */}
+      <section style={{
+        maxWidth: '1100px',
+        margin: '2rem auto',
+        padding: '2rem'
       }}>
         <h2 style={{
-          color: '#007bff',
           textAlign: 'center',
-          fontWeight: 700,
-          marginBottom: 18
+          fontSize: '1.8rem',
+          color: '#1c3faa',
+          marginBottom: '2rem'
         }}>
           Lo que dicen nuestros usuarios
         </h2>
-        <div className="testimonial-cards" style={{
+        <div style={{
           display: 'flex',
+          overflowX: 'auto',
           gap: '1.5rem',
-          justifyContent: 'center',
-          flexWrap: 'wrap'
+          paddingBottom: '1rem'
         }}>
-          <div className="testimonial-card" style={{
-            background: '#fff',
-            borderLeft: '5px solid #007bff',
-            borderRadius: '0.75rem',
-            boxShadow: '0 2px 8px rgba(0,123,255,0.07)',
-            padding: '1.2rem 1.1rem',
-            maxWidth: 220,
-            minWidth: 180
-          }}>
-            <p style={{ fontStyle: 'italic', marginBottom: 8 }}>
-              "MedLink ha simplificado mis citas médicas. ¡Altamente recomendado!"
-            </p>
-            <span style={{ color: '#dc3545', fontWeight: 600 }}>- María G., Paciente</span>
-          </div>
-          <div className="testimonial-card" style={{
-            background: '#fff',
-            borderLeft: '5px solid #00c6fb',
-            borderRadius: '0.75rem',
-            boxShadow: '0 2px 8px rgba(0,123,255,0.07)',
-            padding: '1.2rem 1.1rem',
-            maxWidth: 220,
-            minWidth: 180
-          }}>
-            <p style={{ fontStyle: 'italic', marginBottom: 8 }}>
-              "Como profesional, valoro la organización y seguridad de esta plataforma."
-            </p>
-            <span style={{ color: '#007bff', fontWeight: 600 }}>- Dr. Juan P., Cardiólogo</span>
-          </div>
-          <div className="testimonial-card" style={{
-            background: '#fff',
-            borderLeft: '5px solid #dc3545',
-            borderRadius: '0.75rem',
-            boxShadow: '0 2px 8px rgba(0,123,255,0.07)',
-            padding: '1.2rem 1.1rem',
-            maxWidth: 220,
-            minWidth: 180
-          }}>
-            <p style={{ fontStyle: 'italic', marginBottom: 8 }}>
-              "La atención remota es excelente. ¡Gracias por hacerlo posible!"
-            </p>
-            <span style={{ color: '#007bff', fontWeight: 600 }}>- Carlos R., Usuario</span>
-          </div>
+          {[
+            {
+              image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80',
+              text: '"El servicio es excepcional. Puedo agendar mis citas en minutos y sin complicaciones."',
+              author: 'María García',
+              role: 'Paciente'
+            },
+            {
+              image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80',
+              text: '"Como médico, valoro la organización y eficiencia que MedLink me ofrece."',
+              author: 'Dr. Juan Pérez',
+              role: 'Cardiólogo'
+            },
+            {
+              image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80',
+              text: '"Es una herramienta intuitiva que ha mejorado la relación con mis pacientes."',
+              author: 'Dra. Ana Martínez',
+              role: 'Pediatra'
+            }
+          ].map((testimonial, index) => (
+            <div key={index} style={{
+              background: '#fff',
+              borderRadius: '1rem',
+              padding: '1.5rem',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
+              minWidth: '280px',
+              flex: '0 0 auto'
+            }}>
+              <img
+                src={testimonial.image}
+                alt={testimonial.author}
+                style={{
+                  width: '70px',
+                  height: '70px',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  marginBottom: '1rem'
+                }}
+              />
+              <p style={{
+                color: '#444',
+                fontSize: '0.95rem',
+                lineHeight: '1.5',
+                marginBottom: '0.8rem'
+              }}>{testimonial.text}</p>
+              <strong style={{ color: '#1c3faa' }}>{testimonial.author}</strong>
+              <span style={{ color: '#777' }}> • {testimonial.role}</span>
+            </div>
+          ))}
         </div>
       </section>
+
+      {/* Login Form Modal */}
+      {showLoginForm && <LoginForm onClose={() => setShowLoginForm(false)} />}
     </div>
   );
 }
