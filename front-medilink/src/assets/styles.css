@@ -1,0 +1,160 @@
+/* Importar fuentes desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #2C4ECF;
+  --primary-light: #4A90E2;
+  --accent: #E63946;
+  --background: #F8FAFC;
+  --text: #2D3748;
+  --text-light: #718096;
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  font-family: 'Poppins', sans-serif; /* Cambiamos la fuente a Poppins */
+  background-color: #ffffff;
+  color: #212529;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  padding: 0.8rem 2rem; /* Aumentamos el padding para botones más grandes */
+  border-radius: 2rem; /* Bordes completamente redondeados */
+  font-size: 1rem;
+  font-weight: 600; /* Texto en negrita */
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+button.primary {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+button.primary:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px); /* Efecto de elevación al pasar el mouse */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+button.danger {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+button.danger:hover {
+  background-color: #a71d2a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.header h1 {
+  font-size: 1.75rem;
+  margin: 0;
+  font-weight: 700; /* Texto en negrita para el encabezado */
+}
+
+.header nav a {
+  color: #ffffff;
+  margin-left: 1rem;
+  font-weight: 600;
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  color: #212529;
+  margin-top: 2rem;
+}
+
+.form-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #007bff;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  font-family: 'Poppins', sans-serif; /* Asegurar consistencia de fuente */
+}
+
+.dashboard {
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  max-width: 800px;
+}
+
+.dashboard h2 {
+  color: #007bff;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.dashboard ul {
+  list-style: none;
+}
+
+.dashboard li {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.375rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard li strong {
+  color: #dc3545;
+}
