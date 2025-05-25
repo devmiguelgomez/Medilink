@@ -1,30 +1,14 @@
 // src/services/userService.js
 import axios from 'axios';
+import { API_ENDPOINTS, checkApiStatus } from '../config/apiConfig';
 
-// Usar una variable de entorno o una URL de respaldo para el API
-const API_URL = import.meta.env.VITE_API_URL || 'https://medilink-backend-flax.vercel.app/api/users';
-
-// Función para verificar la disponibilidad del API
-export const checkApiStatus = async () => {
-  try {
-    const response = await axios.get(API_URL.replace('/users', ''));
-    return {
-      status: true,
-      message: response.data.message || 'API disponible'
-    };
-  } catch (error) {
-    console.error('Error al verificar la API:', error);
-    return {
-      status: false,
-      message: error.message || 'API no disponible'
-    };
-  }
-};
+// Exportar la función de verificación de API
+export { checkApiStatus };
 
 // Obtener todos los usuarios
 export const getUsers = async () => {
   try {
-    const response = await axios.get(API_URL);
+    const response = await axios.get(API_ENDPOINTS.users);
     return response.data;
   } catch (error) {
     console.error('Error al obtener usuarios:', error);
@@ -35,7 +19,7 @@ export const getUsers = async () => {
 // Crear un nuevo usuario
 export const createUser = async (userData) => {
   try {
-    const response = await axios.post(API_URL, userData);
+    const response = await axios.post(API_ENDPOINTS.users, userData);
     return response.data;
   } catch (error) {
     console.error('Error al crear usuario:', error);
@@ -43,10 +27,32 @@ export const createUser = async (userData) => {
   }
 };
 
+// Registrar un nuevo usuario
+export const registerUser = async (userData) => {
+  try {
+    const response = await axios.post(`${API_ENDPOINTS.users}/register`, userData);
+    return response.data;
+  } catch (error) {
+    console.error('Error al registrar usuario:', error);
+    throw error;
+  }
+};
+
+// Login de usuario
+export const loginUser = async (credentials) => {
+  try {
+    const response = await axios.post(`${API_ENDPOINTS.users}/login`, credentials);
+    return response.data;
+  } catch (error) {
+    console.error('Error al iniciar sesión:', error);
+    throw error;
+  }
+};
+
 // Actualizar un usuario existente
 export const updateUser = async (userId, userData) => {
   try {
-    const response = await axios.put(`${API_URL}/${userId}`, userData);
+    const response = await axios.put(`${API_ENDPOINTS.users}/${userId}`, userData);
     return response.data;
   } catch (error) {
     console.error('Error al actualizar usuario:', error);
@@ -57,7 +63,7 @@ export const updateUser = async (userId, userData) => {
 // Eliminar un usuario
 export const deleteUser = async (userId) => {
   try {
-    const response = await axios.delete(`${API_URL}/${userId}`);
+    const response = await axios.delete(`${API_ENDPOINTS.users}/${userId}`);
     return response.data;
   } catch (error) {
     console.error('Error al eliminar usuario:', error);

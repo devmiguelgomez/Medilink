@@ -11,9 +11,10 @@ import {
   cancelAppointment,
 } from '../../services/consultationService';
 import { getPatientHistory, addMedicalRecord } from '../../services/medicalHistoryService';
+import { Navigate } from 'react-router-dom';
 
 function ProfessionalDashboard() {
-  const { user } = useContext(AuthContext);
+  const { user, isLoggedIn } = useContext(AuthContext);
 
   // Estado para el perfil del profesional
   const [profile, setProfile] = useState({
@@ -40,6 +41,11 @@ function ProfessionalDashboard() {
     fetchProfile();
     fetchAppointments();
   }, []);
+
+  // Si no está autenticado o no es profesional, redirigir
+  if (!isLoggedIn || !user || user.role !== 'doctor') {
+    return <Navigate to="/" replace />;
+  }
 
   // Funciones para el perfil del profesional
   const fetchProfile = async () => {

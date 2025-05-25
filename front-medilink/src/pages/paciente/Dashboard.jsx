@@ -1,7 +1,7 @@
 // src/pages/paciente/Dashboard.jsx
-import React, { useContext, useState, useEffect } from 'react';
-import { AuthContext } from '../../context/AuthContext';
-import { AppointmentsContext } from '../../context/AppointmentsContext';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import { useAppointments } from '../../context/AppointmentsContext';
 import {
   getPatientProfile,
   updatePatientProfile,
@@ -13,10 +13,11 @@ import {
   cancelAppointment,
 } from '../../services/appointmentService';
 import { getPatientHistory } from '../../services/medicalHistoryService';
+import { Navigate } from 'react-router-dom';
 
 function PatientDashboard() {
-  const { user } = useContext(AuthContext);
-  const { appointments: contextAppointments, refreshAppointments } = useContext(AppointmentsContext);
+  const { currentUser: user, isLoggedIn } = useAuth();
+  const { appointments: contextAppointments, refreshAppointments } = useAppointments();
 
   // Estado para el perfil del paciente
   const [profile, setProfile] = useState({
@@ -126,9 +127,38 @@ function PatientDashboard() {
     }
   };
 
+  // Si no está autenticado o no es paciente, redirigir
+  if (!isLoggedIn || !user || user.role !== 'patient') {
+    return <Navigate to="/" replace />;
+  }
+
   return (
-    <div className="patient-dashboard">
-      <h1>Bienvenido, {user?.name}</h1>
+    <div className="dashboard patient-dashboard">
+      <h1>Panel del Paciente</h1>
+      <div className="dashboard-welcome">
+        <h2>Bienvenido/a, {user.name}</h2>
+        <p>Desde aquí puede gestionar su información médica y citas.</p>
+      </div>
+      
+      <div className="dashboard-cards">
+        <div className="card">
+          <h3>Próximas Citas</h3>
+          <p>Vea sus próximas consultas médicas.</p>
+          <a href="/paciente/citas" className="btn">Ver Citas</a>
+        </div>
+        
+        <div className="card">
+          <h3>Mi Historial Médico</h3>
+          <p>Acceda a su historial médico completo.</p>
+          <a href="/paciente/historial" className="btn">Ver Historial</a>
+        </div>
+        
+        <div className="card">
+          <h3>Mis Recetas</h3>
+          <p>Revise sus recetas médicas actuales.</p>
+          <a href="/paciente/recetas" className="btn">Ver Recetas</a>
+        </div>
+      </div>
 
       {/* Gestión del perfil */}
       <section className="dashboard-section">
