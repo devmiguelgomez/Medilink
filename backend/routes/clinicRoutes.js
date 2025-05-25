@@ -9,11 +9,11 @@ const {
 const { protect, authorize } = require('../middleware/authMiddleware');
 
 router.route('/')
-  .get(protect, getClinics)
+  .get(getClinics)
   .post(protect, authorize(['admin']), createClinic);
 
 router.route('/:id')
-  .get(protect, getClinicById)
+  .get(getClinicById)
   .put(protect, authorize(['admin']), updateClinic);
 
 module.exports = router;

@@ -17,7 +17,8 @@ const clinicSchema = mongoose.Schema({
   },
   contactInfo: {
     phone: String,
-    email: String
+    email: String,
+    website: String
   },
   operatingHours: [{
     day: String,

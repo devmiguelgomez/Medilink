@@ -15,14 +15,20 @@ const doctorSchema = mongoose.Schema({
     required: true,
     unique: true
   },
-  schedule: [{
+  clinic: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Clinic'
+  },
+  availability: [{
     day: String,
     startTime: String,
     endTime: String
   }],
-  assignedClinics: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Clinic'
+  experience: Number,
+  education: [{
+    degree: String,
+    institution: String,
+    year: Number
   }]
 }, {
   timestamps: true
