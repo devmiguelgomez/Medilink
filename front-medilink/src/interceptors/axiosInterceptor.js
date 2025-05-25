@@ -24,7 +24,7 @@ export const setupInterceptors = () => {
         console.error('Sesión expirada o token inválido');
         // Cerrar sesión y redirigir al login
         logout();
-        window.location.href = '/login';
+        window.location.href = '/';
       }
       
       return Promise.reject(error);

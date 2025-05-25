@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import { initializeAuth, getCurrentUser, isAuthenticated } from '../services/authService';
 
 // Crear el contexto con valores predeterminados
-const AuthContext = createContext({
+export const AuthContext = createContext({
   currentUser: null,
   setCurrentUser: () => {},
   isLoggedIn: false,
@@ -49,5 +49,3 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-export default AuthContext;

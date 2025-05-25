@@ -3,7 +3,7 @@ import { getAppointments } from '../services/appointmentService';
 import { useAuth } from './AuthContext';
 
 // Crear el contexto
-const AppointmentsContext = createContext();
+export const AppointmentsContext = createContext();
 
 // Hook personalizado para usar el contexto
 export const useAppointments = () => {
@@ -90,5 +90,3 @@ export const AppointmentsProvider = ({ children }) => {
     </AppointmentsContext.Provider>
   );
 };
-
-export default AppointmentsContext;

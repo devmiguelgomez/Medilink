@@ -1,7 +1,7 @@
 // src/pages/paciente/Dashboard.jsx
-import React, { useContext, useState, useEffect } from 'react';
-import { AuthContext } from '../../context/AuthContext';
-import { AppointmentsContext } from '../../context/AppointmentsContext';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import { useAppointments } from '../../context/AppointmentsContext';
 import {
   getPatientProfile,
   updatePatientProfile,
@@ -16,8 +16,8 @@ import { getPatientHistory } from '../../services/medicalHistoryService';
 import { Navigate } from 'react-router-dom';
 
 function PatientDashboard() {
-  const { user, isLoggedIn } = useContext(AuthContext);
-  const { appointments: contextAppointments, refreshAppointments } = useContext(AppointmentsContext);
+  const { currentUser: user, isLoggedIn } = useAuth();
+  const { appointments: contextAppointments, refreshAppointments } = useAppointments();
 
   // Estado para el perfil del paciente
   const [profile, setProfile] = useState({

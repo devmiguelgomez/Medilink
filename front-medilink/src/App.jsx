@@ -12,7 +12,6 @@ import ProfessionalDashboard from './pages/profesional/Dashboard';
 import AdminDashboard from './pages/admin/Dashboard';
 import NotFoundPage from './pages/NotFoundPage';
 import { AuthProvider } from './context/AuthContext';
-import { AppointmentsProvider } from './context/AppointmentsContext';
 
 function App() {
   const [apiStatus, setApiStatus] = useState({ status: false, message: 'Verificando...' });
