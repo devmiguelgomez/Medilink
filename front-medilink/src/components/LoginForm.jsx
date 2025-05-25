@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/authService';
 import { useAuth } from '../context/AuthContext';
-import '../assets/styles.css';
 
 function LoginForm({ onClose }) {
   const [formData, setFormData] = useState({
@@ -30,6 +29,7 @@ function LoginForm({ onClose }) {
     try {
       const userData = await login(formData);
       
+      // Actualizar el contexto con los datos del usuario
       setCurrentUser({
         id: userData._id,
         name: userData.name,
@@ -50,7 +50,8 @@ function LoginForm({ onClose }) {
       
       if (onClose) onClose();
     } catch (err) {
-      setError(err.response?.data?.message || 'Error al iniciar sesión. Por favor, intente nuevamente.');
+      console.error('Error en login:', err);
+      setError('Error al iniciar sesión. Verifique sus credenciales.');
     } finally {
       setLoading(false);
     }
@@ -72,7 +73,6 @@ function LoginForm({ onClose }) {
             value={formData.email}
             onChange={handleInputChange}
             required
-            placeholder="ejemplo@correo.com"
           />
         </div>
         
@@ -85,7 +85,6 @@ function LoginForm({ onClose }) {
             value={formData.password}
             onChange={handleInputChange}
             required
-            placeholder="Ingrese su contraseña"
           />
         </div>
         

@@ -1,8 +1,14 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { initializeAuth, getCurrentUser, isAuthenticated } from '../services/authService';
 
-// Crear el contexto
-const AuthContext = createContext();
+// Crear el contexto con valores predeterminados
+const AuthContext = createContext({
+  currentUser: null,
+  setCurrentUser: () => {},
+  isLoggedIn: false,
+  setIsLoggedIn: () => {},
+  loading: true
+});
 
 // Hook personalizado para usar el contexto
 export const useAuth = () => {

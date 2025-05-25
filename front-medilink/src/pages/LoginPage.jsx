@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import LoginForm from '../components/LoginForm';
-import '../assets/styles.css';
 
 function LoginPage() {
   const { isLoggedIn, currentUser } = useAuth();
-  const [showLoginForm, setShowLoginForm] = useState(false);
 
   // Redireccionar si el usuario ya está autenticado
   if (isLoggedIn && currentUser) {
