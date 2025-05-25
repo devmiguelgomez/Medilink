@@ -1,7 +1,7 @@
 // src/services/patientService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/patients'; // URL del backend
+const API_URL = 'https://medilink-backend-flax.vercel.app/api/patients'; // URL del backend
 
 export const getPatientProfile = async () => {
   try {

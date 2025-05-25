@@ -1,7 +1,7 @@
 // src/services/medicalHistoryService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/medical-history';
+const API_URL = 'https://medilink-backend-flax.vercel.app/api/medical-history';
 
 export const getPatientHistory = async (patientId) => {
   try {

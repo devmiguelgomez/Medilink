@@ -1,7 +1,25 @@
 // src/services/userService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/users'; // URL del backend
+// Usar una variable de entorno o una URL de respaldo para el API
+const API_URL = import.meta.env.VITE_API_URL || 'https://medilink-backend-flax.vercel.app/api/users';
+
+// Función para verificar la disponibilidad del API
+export const checkApiStatus = async () => {
+  try {
+    const response = await axios.get(API_URL.replace('/users', ''));
+    return {
+      status: true,
+      message: response.data.message || 'API disponible'
+    };
+  } catch (error) {
+    console.error('Error al verificar la API:', error);
+    return {
+      status: false,
+      message: error.message || 'API no disponible'
+    };
+  }
+};
 
 // Obtener todos los usuarios
 export const getUsers = async () => {

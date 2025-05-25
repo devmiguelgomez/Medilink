@@ -1,7 +1,7 @@
 // src/services/professionalService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/professionals'; // URL del backend
+const API_URL = 'https://medilink-backend-flax.vercel.app/api/professionals'; // URL del backend
 
 // Obtener el perfil del profesional
 export const getProfessionalProfile = async (userId) => {
