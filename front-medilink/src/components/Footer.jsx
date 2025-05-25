@@ -1,6 +1,8 @@
 import React from 'react';
 
 function Footer() {
+  const year = new Date().getFullYear();
+  
   return (
     <footer
       className="footer"
@@ -16,43 +18,43 @@ function Footer() {
         position: 'relative'
       }}
     >
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/4006/4006511.png"
-        alt="MedLink Logo"
-        style={{
-          width: 36, // Reducido el tamaño
-          marginBottom: 8,
-          filter: 'brightness(0) invert(1)'
-        }}
-      />
-      <h3 style={{ 
-        fontFamily: 'Outfit, sans-serif',
-        fontWeight: 600,
-        fontSize: '1rem',
-        margin: '0 0 0.5rem 0',
-        letterSpacing: 0.5
-      }}>
-        MedLink - Conectando Salud y Tecnología
-      </h3>
-      <p style={{ 
-        margin: 0,
-        fontSize: '0.9rem',
-        opacity: 0.9
-      }}>
-        &copy; {new Date().getFullYear()} MedLink. Todos los derechos reservados.
-      </p>
-      <div style={{ marginTop: 12, fontSize: '0.95rem' }}>
-        <a
-          href="mailto:contacto@medlink.com"
-          style={{
-            color: '#fff',
-            margin: '0 1rem',
-            textDecoration: 'underline',
-            fontWeight: 500
-          }}
-        >
-          contacto@medlink.com
-        </a>
+      <div className="footer-content">
+        <div className="footer-logo">
+          <h3 style={{ 
+            fontFamily: 'Outfit, sans-serif',
+            fontWeight: 600,
+            fontSize: '1rem',
+            margin: '0 0 0.5rem 0',
+            letterSpacing: 0.5
+          }}>
+            MedLink
+          </h3>
+          <p>Plataforma de gestión médica</p>
+        </div>
+        
+        <div className="footer-links">
+          <div className="link-group">
+            <h4>Enlaces</h4>
+            <ul>
+              <li><a href="/">Inicio</a></li>
+              <li><a href="/about">Sobre nosotros</a></li>
+              <li><a href="/services">Servicios</a></li>
+              <li><a href="/contact">Contacto</a></li>
+            </ul>
+          </div>
+          
+          <div className="link-group">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="/privacy">Política de privacidad</a></li>
+              <li><a href="/terms">Términos de uso</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div className="copyright">
+        <p>&copy; {year} MedLink. Todos los derechos reservados.</p>
       </div>
     </footer>
   );

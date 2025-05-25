@@ -1,7 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { logout } from '../services/authService';
 
 function Header() {
+  const { isLoggedIn, currentUser, setIsLoggedIn, setCurrentUser } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    setIsLoggedIn(false);
+    setCurrentUser(null);
+    navigate('/');
+  };
+
   return (
     <header
       className="header"
@@ -50,40 +62,77 @@ function Header() {
           Plataforma Médica
         </span>
       </div>
-      <nav style={{ display: 'flex', gap: '1.2rem' }}>
-        <Link
-          to="/"
-          style={{
-            color: '#fff',
-            fontWeight: 600,
-            fontSize: '1.05rem',
-            padding: '0.4rem 1.1rem',
-            borderRadius: '1.2rem',
-            transition: 'background 0.2s',
-            background: 'transparent'
-          }}
-          onMouseOver={e => e.target.style.background = '#e3f0ff44'}
-          onMouseOut={e => e.target.style.background = 'transparent'}
-        >
-          Inicio
-        </Link>
-        <Link
-          to="/register"
-          style={{
-            color: '#fff',
-            fontWeight: 600,
-            fontSize: '1.05rem',
-            padding: '0.4rem 1.1rem',
-            borderRadius: '1.2rem',
-            background: '#dc3545',
-            boxShadow: '0 2px 8px #dc354522',
-            transition: 'background 0.2s'
-          }}
-          onMouseOver={e => e.target.style.background = '#b71c2b'}
-          onMouseOut={e => e.target.style.background = '#dc3545'}
-        >
-          Registrarse
-        </Link>
+      <nav className="navigation" style={{ display: 'flex', gap: '1.2rem' }}>
+        {isLoggedIn && currentUser ? (
+          <>
+            {currentUser.role === 'patient' && (
+              <>
+                <Link to="/paciente/dashboard">Dashboard</Link>
+                <Link to="/paciente/citas">Mis Citas</Link>
+                <Link to="/paciente/historial">Mi Historial</Link>
+              </>
+            )}
+            
+            {currentUser.role === 'doctor' && (
+              <>
+                <Link to="/profesional/dashboard">Dashboard</Link>
+                <Link to="/profesional/agenda">Agenda</Link>
+                <Link to="/profesional/pacientes">Pacientes</Link>
+              </>
+            )}
+            
+            {currentUser.role === 'admin' && (
+              <>
+                <Link to="/admin/dashboard">Dashboard</Link>
+                <Link to="/admin/usuarios">Usuarios</Link>
+                <Link to="/admin/clinicas">Clínicas</Link>
+              </>
+            )}
+            
+            <div className="user-info">
+              <span>Hola, {currentUser.name}</span>
+              <button onClick={handleLogout} className="btn-logout">
+                Cerrar Sesión
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/"
+              style={{
+                color: '#fff',
+                fontWeight: 600,
+                fontSize: '1.05rem',
+                padding: '0.4rem 1.1rem',
+                borderRadius: '1.2rem',
+                transition: 'background 0.2s',
+                background: 'transparent'
+              }}
+              onMouseOver={e => e.target.style.background = '#e3f0ff44'}
+              onMouseOut={e => e.target.style.background = 'transparent'}
+            >
+              Inicio
+            </Link>
+            <Link
+              to="/register"
+              style={{
+                color: '#fff',
+                fontWeight: 600,
+                fontSize: '1.05rem',
+                padding: '0.4rem 1.1rem',
+                borderRadius: '1.2rem',
+                background: '#dc3545',
+                boxShadow: '0 2px 8px #dc354522',
+                transition: 'background 0.2s'
+              }}
+              onMouseOver={e => e.target.style.background = '#b71c2b'}
+              onMouseOut={e => e.target.style.background = '#dc3545'}
+            >
+              Registrarse
+            </Link>
+          </>
+        )}
       </nav>
     </header>
   );

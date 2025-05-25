@@ -15,8 +15,17 @@ import { getActivities } from '../../services/activityService';
 import styles from './Dashboard.module.css';
 import DatePicker from 'react-datepicker'; // Importa el componente DatePicker
 import 'react-datepicker/dist/react-datepicker.css'; // Asegúrate de importar los estilos aquí también si no lo hiciste en el archivo principal
+import { useAuth } from '../../context/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 function Dashboard() {
+  const { currentUser, isLoggedIn } = useAuth();
+
+  // Si no está autenticado o no es administrador, redirigir
+  if (!isLoggedIn || !currentUser || currentUser.role !== 'admin') {
+    return <Navigate to="/" replace />;
+  }
+
   const [users, setUsers] = useState([]);
   const [formDataUser, setFormDataUser] = useState({ name: '', role: '', email: '' });
   const [editingUserId, setEditingUserId] = useState(null);
