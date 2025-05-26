@@ -90,8 +90,38 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+// Actualizar perfil de usuario
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.documentId = req.body.documentId || user.documentId;
+    user.dateOfBirth = req.body.dateOfBirth || user.dateOfBirth;
+    user.contactInfo = req.body.contactInfo || user.contactInfo;
+    // Agrega aquí los campos que quieras permitir actualizar
+
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      documentId: updatedUser.documentId,
+      dateOfBirth: updatedUser.dateOfBirth,
+      contactInfo: updatedUser.contactInfo
+    });
+  } else {
+    res.status(404);
+    throw new Error('Usuario no encontrado');
+  }
+});
+
 module.exports = {
   registerUser,
   loginUser,
-  getUserProfile
+  getUserProfile,
+  updateUserProfile
 };
