@@ -18,9 +18,14 @@ const API_ENDPOINTS = {
 // Función para verificar el estado de la API
 const checkApiStatus = async () => {
   try {
-    // Usamos un endpoint válido que siempre existe
-    const response = await fetch(`${API_BASE_URL}/users`);
-    if (response.ok) {
+    // Usamos un endpoint válido que siempre existe (login, no requiere autenticación)
+    const response = await fetch(`${API_BASE_URL}/users/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'test@test.com', password: 'test' })
+    });
+    // Si responde 400 o 401, la API está viva (no importa si el usuario no existe)
+    if (response.status === 400 || response.status === 401) {
       return {
         status: true,
         message: 'API disponible'
