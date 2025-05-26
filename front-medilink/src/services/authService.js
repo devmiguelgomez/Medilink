@@ -1,24 +1,14 @@
 // src/services/authService.js
-import axios from 'axios';
-import { API_ENDPOINTS } from '../config/apiConfig';
+import axiosInstance from './axios.config';
 
 // Token key para localStorage
 const TOKEN_KEY = 'medilink_token';
 const USER_DATA = 'medilink_user';
 
-// Configurar el token en los headers de axios
-export const setAuthToken = (token) => {
-  if (token) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  } else {
-    delete axios.defaults.headers.common['Authorization'];
-  }
-};
-
 // Login
 export const login = async (credentials) => {
   try {
-    const response = await axios.post(`${API_ENDPOINTS.users}/login`, credentials);
+    const response = await axiosInstance.post('/users/login', credentials);
     
     // Guardar token y datos del usuario
     localStorage.setItem(TOKEN_KEY, response.data.token);
@@ -28,9 +18,6 @@ export const login = async (credentials) => {
       email: response.data.email,
       role: response.data.role
     }));
-    
-    // Configurar token para futuros requests
-    setAuthToken(response.data.token);
     
     return response.data;
   } catch (error) {
@@ -42,7 +29,7 @@ export const login = async (credentials) => {
 // Registro
 export const register = async (userData) => {
   try {
-    const response = await axios.post(`${API_ENDPOINTS.users}/register`, userData);
+    const response = await axiosInstance.post('/users/register', userData);
     
     // Guardar token y datos del usuario
     localStorage.setItem(TOKEN_KEY, response.data.token);
@@ -52,9 +39,6 @@ export const register = async (userData) => {
       email: response.data.email,
       role: response.data.role
     }));
-    
-    // Configurar token para futuros requests
-    setAuthToken(response.data.token);
     
     return response.data;
   } catch (error) {
@@ -67,13 +51,12 @@ export const register = async (userData) => {
 export const logout = () => {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_DATA);
-  setAuthToken(null);
 };
 
 // Verificar autenticación
 export const isAuthenticated = () => {
   const token = localStorage.getItem(TOKEN_KEY);
-  return !!token; // Retorna true si hay un token
+  return !!token;
 };
 
 // Obtener token
@@ -98,7 +81,7 @@ export const getCurrentUser = () => {
 // Obtener perfil del usuario
 export const getUserProfile = async () => {
   try {
-    const response = await axios.get(`${API_ENDPOINTS.users}/profile`);
+    const response = await axiosInstance.get('/users/profile');
     return response.data;
   } catch (error) {
     console.error('Error al obtener perfil del usuario:', error);
@@ -106,10 +89,12 @@ export const getUserProfile = async () => {
   }
 };
 
-// Establecer token al iniciar la aplicación
+// Inicializar autenticación
 export const initializeAuth = () => {
   const token = localStorage.getItem(TOKEN_KEY);
   if (token) {
-    setAuthToken(token);
+    // El token se maneja automáticamente por el interceptor de axios
+    return true;
   }
+  return false;
 };

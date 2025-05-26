@@ -18,17 +18,24 @@ const API_ENDPOINTS = {
 // Función para verificar el estado de la API
 const checkApiStatus = async () => {
   try {
-    const response = await fetch(API_BASE_URL);
-    const data = await response.json();
-    return { 
-      status: true, 
-      message: data.message || 'API disponible' 
-    };
+    // Usamos un endpoint válido que siempre existe
+    const response = await fetch(`${API_BASE_URL}/users`);
+    if (response.ok) {
+      return {
+        status: true,
+        message: 'API disponible'
+      };
+    } else {
+      return {
+        status: false,
+        message: 'API no disponible (status ' + response.status + ')'
+      };
+    }
   } catch (error) {
     console.error('Error al verificar la API:', error);
-    return { 
-      status: false, 
-      message: error.message || 'API no disponible' 
+    return {
+      status: false,
+      message: error.message || 'API no disponible'
     };
   }
 };

@@ -17,7 +17,7 @@ import { Navigate } from 'react-router-dom';
 
 function PatientDashboard() {
   const { currentUser: user, isLoggedIn } = useAuth();
-  const { appointments: contextAppointments, refreshAppointments } = useAppointments();
+  const { appointments, loading: appointmentsLoading, error: appointmentsError } = useAppointments();
 
   // Estado para el perfil del paciente
   const [profile, setProfile] = useState({
@@ -29,10 +29,10 @@ function PatientDashboard() {
   });
 
   // Estado para citas médicas
-  const [appointments, setAppointments] = useState(contextAppointments || []);
+  const [appointmentsList, setAppointmentsList] = useState([]);
   const [newAppointment, setNewAppointment] = useState({
     reason: '',
-    modality: 'presencial', // Valor predeterminado
+    modality: 'presencial',
     professional: '',
     date: '',
   });
@@ -40,20 +40,48 @@ function PatientDashboard() {
 
   // Estado para el historial médico
   const [medicalHistory, setMedicalHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchProfile();
-    fetchAppointments();
-    fetchMedicalHistory();
-  }, []);
+    if (appointments) {
+      setAppointmentsList(Array.isArray(appointments) ? appointments : []);
+    }
+  }, [appointments]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!isLoggedIn || !user) return;
+      
+      setLoading(true);
+      setError(null);
+      
+      try {
+        await Promise.all([
+          fetchProfile(),
+          fetchMedicalHistory()
+        ]);
+      } catch (err) {
+        setError('Error al cargar los datos');
+        console.error('Error al cargar datos:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [isLoggedIn, user]);
 
   // Funciones para el perfil del paciente
   const fetchProfile = async () => {
     try {
-      const data = await getPatientProfile(user.id); // Suponemos que el ID del usuario está en el contexto
-      setProfile(data);
+      const data = await getPatientProfile();
+      if (data) {
+        setProfile(data);
+      }
     } catch (error) {
       console.error('Error al cargar el perfil:', error);
+      setError('No se pudo cargar el perfil del paciente');
     }
   };
 
@@ -65,10 +93,11 @@ function PatientDashboard() {
   const handleSubmitProfile = async (e) => {
     e.preventDefault();
     try {
-      await updatePatientProfile(profile);
+      await updatePatientProfile(user.id, profile);
       alert('Perfil actualizado exitosamente');
     } catch (error) {
       console.error('Error al actualizar el perfil:', error);
+      alert('Error al actualizar el perfil');
     }
   };
 
@@ -76,7 +105,7 @@ function PatientDashboard() {
   const fetchAppointments = async () => {
     try {
       const data = await getAppointments(user.id); // Suponemos que el ID del usuario está en el contexto
-      setAppointments(data);
+      setAppointmentsList(data);
     } catch (error) {
       console.error('Error al cargar citas:', error);
     }
@@ -120,12 +149,32 @@ function PatientDashboard() {
   // Funciones para el historial médico
   const fetchMedicalHistory = async () => {
     try {
-      const data = await getPatientHistory(user.id); // Suponemos que el ID del usuario está en el contexto
-      setMedicalHistory(data);
+      const data = await getPatientHistory(user.id);
+      setMedicalHistory(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error al cargar historial médico:', error);
+      setMedicalHistory([]);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Cargando datos...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <h2>Error</h2>
+        <p>{error}</p>
+        <button onClick={() => window.location.reload()}>Reintentar</button>
+      </div>
+    );
+  }
 
   // Si no está autenticado o no es paciente, redirigir
   if (!isLoggedIn || !user || user.role !== 'patient') {
@@ -274,29 +323,38 @@ function PatientDashboard() {
         </form>
 
         <h3>Mis Citas Programadas</h3>
-        <ul className="list">
-          {appointments.map((appointment) => (
-            <li key={appointment.id} className="list-item">
-              <span>
-                {appointment.date} - {appointment.reason} ({appointment.modality})
-              </span>
-              <div className="actions">
-                <button
-                  className="btn btn-edit"
-                  onClick={() => setEditingAppointmentId(appointment.id)}
-                >
-                  Editar
-                </button>
-                <button
-                  className="btn btn-delete"
-                  onClick={() => handleCancelAppointment(appointment.id)}
-                >
-                  Cancelar
-                </button>
+        <div className="appointments-list">
+          <h3>Mis Citas</h3>
+          {appointmentsLoading ? (
+            <p>Cargando citas...</p>
+          ) : appointmentsError ? (
+            <p>Error al cargar las citas: {appointmentsError}</p>
+          ) : appointmentsList.length === 0 ? (
+            <p>No tienes citas programadas</p>
+          ) : (
+            appointmentsList.map(appointment => (
+              <div key={appointment.id} className="appointment-card">
+                <span>
+                  {appointment.date} - {appointment.reason} ({appointment.modality})
+                </span>
+                <div className="actions">
+                  <button
+                    className="btn btn-edit"
+                    onClick={() => setEditingAppointmentId(appointment.id)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="btn btn-delete"
+                    onClick={() => handleCancelAppointment(appointment.id)}
+                  >
+                    Cancelar
+                  </button>
+                </div>
               </div>
-            </li>
-          ))}
-        </ul>
+            ))
+          )}
+        </div>
       </section>
 
       {/* Historial médico */}

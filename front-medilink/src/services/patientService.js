@@ -1,10 +1,9 @@
 // src/services/patientService.js
-import axios from 'axios';
-import { API_ENDPOINTS } from '../config/apiConfig';
+import axiosInstance from './axios.config';
 
-export const getPatientProfile = async () => {
+export const getPatientProfile = async (patientId) => {
   try {
-    const response = await axios.get(API_ENDPOINTS.patients);
+    const response = await axiosInstance.get(`/users/profile`);
     return response.data;
   } catch (error) {
     console.error('Error al obtener el perfil:', error);
@@ -12,9 +11,9 @@ export const getPatientProfile = async () => {
   }
 };
 
-export const updatePatientProfile = async (profileData) => {
+export const updatePatientProfile = async (patientId, profileData) => {
   try {
-    const response = await axios.put(API_ENDPOINTS.patients, profileData);
+    const response = await axiosInstance.put(`/users/profile`, profileData);
     return response.data;
   } catch (error) {
     console.error('Error al actualizar el perfil:', error);

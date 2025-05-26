@@ -1,20 +1,19 @@
 // src/services/medicalHistoryService.js
-import axios from 'axios';
-import { API_ENDPOINTS } from '../config/apiConfig';
+import axiosInstance from './axios.config';
 
 export const getPatientHistory = async (patientId) => {
   try {
-    const response = await axios.get(`${API_ENDPOINTS.medicalRecords}/patient/${patientId}`);
-    return response.data;
+    const response = await axiosInstance.get(`/medical-records/patient/${patientId}`);
+    return response.data || [];
   } catch (error) {
     console.error('Error al obtener historial médico:', error);
-    throw error;
+    return []; // Retornamos un array vacío en caso de error
   }
 };
 
 export const addMedicalRecord = async (patientId, recordData) => {
   try {
-    const response = await axios.post(API_ENDPOINTS.medicalRecords, { 
+    const response = await axiosInstance.post('/medical-records', { 
       patientId, 
       ...recordData 
     });
