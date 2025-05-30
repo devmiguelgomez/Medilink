@@ -66,7 +66,7 @@ const Login = () => {
   }
 
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="size">
       <Box
         sx={{
           marginTop: 8,
@@ -134,4 +134,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login; 

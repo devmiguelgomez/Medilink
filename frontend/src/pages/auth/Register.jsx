@@ -147,7 +147,7 @@ const Register = () => {
           </Typography>
           <Box component="form" onSubmit={onSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <TextField
                   required
                   fullWidth
@@ -159,7 +159,7 @@ const Register = () => {
                   onChange={onChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <TextField
                   required
                   fullWidth
@@ -171,7 +171,7 @@ const Register = () => {
                   onChange={onChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <TextField
                   required
                   fullWidth
@@ -184,7 +184,7 @@ const Register = () => {
                   onChange={onChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <TextField
                   required
                   fullWidth
@@ -196,7 +196,7 @@ const Register = () => {
                   onChange={onChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <TextField
                   required
                   fullWidth
@@ -207,7 +207,7 @@ const Register = () => {
                   onChange={onChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
                     label="Date of Birth"
@@ -219,7 +219,7 @@ const Register = () => {
                   />
                 </LocalizationProvider>
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <TextField
                   select
                   required
@@ -236,7 +236,7 @@ const Register = () => {
               </Grid>
               {formData.role === 'doctor' && (
                 <>
-                  <Grid item xs={12}>
+                  <Grid size={12}>
                     <TextField
                       required
                       fullWidth
@@ -246,7 +246,7 @@ const Register = () => {
                       onChange={onChange}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid size={12}>
                     <TextField
                       required
                       fullWidth
@@ -258,7 +258,7 @@ const Register = () => {
                   </Grid>
                 </>
               )}
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <TextField
                   fullWidth
                   name="contactInfo.phone"
@@ -268,7 +268,7 @@ const Register = () => {
                   onChange={onChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <TextField
                   fullWidth
                   name="contactInfo.address"

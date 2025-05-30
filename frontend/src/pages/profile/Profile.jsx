@@ -114,7 +114,7 @@ const Profile = () => {
         </Box>
 
         <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6}}>
             <Typography variant="h6" gutterBottom>
               Personal Information
             </Typography>
@@ -146,7 +146,7 @@ const Profile = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6}}>
             <Typography variant="h6" gutterBottom>
               Change Password
             </Typography>
@@ -196,13 +196,13 @@ const Profile = () => {
             Account Information
           </Typography>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{xs: 12, sm: 6}}>
               <Typography variant="subtitle2" color="textSecondary">
                 Role
               </Typography>
               <Typography variant="body1">{user?.role}</Typography>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{xs: 12, sm: 6}}>
               <Typography variant="subtitle2" color="textSecondary">
                 Account Created
               </Typography>
@@ -217,4 +217,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Profile; 
