@@ -51,7 +51,7 @@ const Home = () => {
       >
         <Container maxWidth="lg">
           <Grid container spacing={4} alignItems="center">
-            <Grid size={{ xs: 12, md: 6}}>
+            <Grid item xs={12} md={6}>
               <Typography variant="h2" component="h1" gutterBottom>
                 Welcome to MediLink
               </Typography>
@@ -80,7 +80,7 @@ const Home = () => {
                 </Button>
               </Box>
             </Grid>
-            <Grid size={{ xs: 12, md: 6}}>
+            <Grid item xs={12} md={6}>
               <Box
                 component="img"
                 src="/medical-illustration.svg"
@@ -103,7 +103,7 @@ const Home = () => {
         </Typography>
         <Grid container spacing={4} sx={{ mt: 2 }}>
           {features.map((feature, index) => (
-            <Grid size={{ xs: 12, md: 4}} key={index}>
+            <Grid item xs={12} md={4} key={index}>
               <Card
                 sx={{
                   height: '100%',
@@ -162,4 +162,4 @@ const Home = () => {
   );
 };
 
-export default Home; 
+export default Home;
