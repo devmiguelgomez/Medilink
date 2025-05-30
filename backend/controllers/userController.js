@@ -119,9 +119,34 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+// Get all doctors
+const getDoctors = asyncHandler(async (req, res) => {
+  const doctors = await Doctor.find()
+    .populate({
+      path: 'user',
+      select: 'name email'
+    })
+    .select('specialty medicalLicense consultationHours officeAssignments')
+    .lean();
+
+  // Transform the data to include doctor name and other relevant info
+  const formattedDoctors = doctors.map(doctor => ({
+    _id: doctor._id,
+    name: doctor.user.name,
+    email: doctor.user.email,
+    specialty: doctor.specialty,
+    medicalLicense: doctor.medicalLicense,
+    consultationHours: doctor.consultationHours,
+    officeAssignments: doctor.officeAssignments
+  }));
+
+  res.json(formattedDoctors);
+});
+
 module.exports = {
   registerUser,
   loginUser,
   getUserProfile,
-  updateUserProfile
+  updateUserProfile,
+  getDoctors
 };

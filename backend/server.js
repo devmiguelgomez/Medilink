@@ -69,12 +69,10 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-// Iniciar el servidor solo si no estamos en un entorno de prueba o en Vercel
-if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
-  app.listen(PORT, () => {
-    console.log(`Servidor corriendo en puerto ${PORT}`);
-  });
-}
+// Iniciar el servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
+});
 
 // Exportar la app para Vercel
 module.exports = app;

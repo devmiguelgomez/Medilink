@@ -19,6 +19,23 @@ const doctorSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Clinic'
   },
+  officeAssignments: [{
+    officeNumber: String,
+    floor: String,
+    building: String
+  }],
+  consultationHours: [{
+    day: {
+      type: String,
+      enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    },
+    startTime: String,
+    endTime: String,
+    isAvailable: {
+      type: Boolean,
+      default: true
+    }
+  }],
   availability: [{
     day: String,
     startTime: String,

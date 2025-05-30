@@ -9,7 +9,7 @@ const appointmentSchema = mongoose.Schema({
   doctor: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'Doctor'
+    ref: 'User'
   },
   date: {
     type: Date,
@@ -34,6 +34,10 @@ const appointmentSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'Clinic'
+  },
+  hasMedicalRecord: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

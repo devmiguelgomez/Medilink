@@ -7,9 +7,16 @@ const {
 } = require('../controllers/medicalRecordController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 
-// Rutas simplificadas para evitar problemas con path-to-regexp
-router.get('/patient/:patientId', protect, authorize(['doctor', 'admin', 'patient']), getPatientMedicalRecords);
+// Get all medical records (filtered by role)
+router.get('/', protect, authorize(['doctor', 'admin', 'patient']), getPatientMedicalRecords);
+
+// Get medical records for a specific patient
+router.get('/patient/:patientId', protect, authorize(['doctor', 'admin']), getPatientMedicalRecords);
+
+// Create new medical record
 router.post('/', protect, authorize(['doctor']), createMedicalRecord);
-router.put('/update/:id', protect, authorize(['doctor']), updateMedicalRecord);
+
+// Update medical record
+router.put('/:id', protect, authorize(['doctor']), updateMedicalRecord);
 
 module.exports = router;

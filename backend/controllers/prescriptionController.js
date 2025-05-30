@@ -3,8 +3,22 @@ const asyncHandler = require('express-async-handler');
 
 // Obtener todas las prescripciones de un paciente
 const getPatientPrescriptions = asyncHandler(async (req, res) => {
-  const prescriptions = await Prescription.find({ patient: req.params.patientId })
+  let query = {};
+  
+  // Si es un paciente, solo mostrar sus prescripciones
+  if (req.user.role === 'patient') {
+    query.patient = req.user._id;
+  }
+  // Si es un doctor, mostrar las prescripciones que ha creado
+  else if (req.user.role === 'doctor') {
+    query.doctor = req.user._id;
+  }
+  // Si es admin, mostrar todas las prescripciones
+  // No se agrega condición para admin, se muestran todas
+
+  const prescriptions = await Prescription.find(query)
     .populate('doctor', 'name specialty')
+    .populate('patient', 'name')
     .sort('-issueDate');
   res.json(prescriptions);
 });
@@ -14,6 +28,7 @@ const createPrescription = asyncHandler(async (req, res) => {
   const {
     patientId,
     medications,
+    instructions,
     diagnosis,
     validUntil
   } = req.body;
@@ -22,12 +37,16 @@ const createPrescription = asyncHandler(async (req, res) => {
     patient: patientId,
     doctor: req.user._id,
     medications,
+    instructions,
     diagnosis,
     validUntil
   });
 
   if (prescription) {
-    res.status(201).json(prescription);
+    const populatedPrescription = await Prescription.findById(prescription._id)
+      .populate('doctor', 'name specialty')
+      .populate('patient', 'name');
+    res.status(201).json(populatedPrescription);
   } else {
     res.status(400);
     throw new Error('Datos de prescripción inválidos');

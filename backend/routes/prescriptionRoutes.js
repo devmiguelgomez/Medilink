@@ -7,9 +7,16 @@ const {
 } = require('../controllers/prescriptionController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 
-// Rutas simplificadas para evitar problemas con path-to-regexp
+// Get all prescriptions (filtered by role)
+router.get('/', protect, authorize(['doctor', 'admin']), getPatientPrescriptions);
+
+// Get prescriptions for a specific patient
 router.get('/patient/:patientId', protect, authorize(['doctor', 'admin']), getPatientPrescriptions);
+
+// Create new prescription
 router.post('/', protect, authorize(['doctor']), createPrescription);
+
+// Update prescription status
 router.put('/status/:id', protect, authorize(['doctor']), updatePrescriptionStatus);
 
 module.exports = router;

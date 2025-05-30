@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { protect } = require('../middleware/authMiddleware');
+const {
+  getAppointments,
+  getCompletedAppointments,
+  createAppointment,
+  updateAppointmentStatus,
+  cancelAppointment
+} = require('../controllers/appointmentController');
+const { protect, authorize } = require('../middleware/authMiddleware');
 
 // Rutas básicas - evitamos expresiones regulares complejas
 router.get('/', (req, res) => {
@@ -27,5 +34,20 @@ router.put('/update/:id', (req, res) => {
 router.delete('/remove/:id', (req, res) => {
   res.json({ message: `Eliminar cita ${req.params.id}`, success: true });
 });
+
+// Get all appointments (filtered by role)
+router.get('/', protect, authorize(['doctor', 'admin', 'patient']), getAppointments);
+
+// Get completed appointments
+router.get('/completed', protect, authorize(['doctor', 'admin']), getCompletedAppointments);
+
+// Create new appointment
+router.post('/create', protect, authorize(['patient']), createAppointment);
+
+// Update appointment status
+router.put('/:id/status', protect, authorize(['doctor', 'admin']), updateAppointmentStatus);
+
+// Cancel appointment
+router.put('/:id/cancel', protect, authorize(['doctor', 'admin', 'patient']), cancelAppointment);
 
 module.exports = router;
